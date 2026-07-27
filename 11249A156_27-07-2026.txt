@@ -1,0 +1,415 @@
+
+   regno:11249A156                 Date:27-07-2026
+
+Enter user-name: A156@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> create table student
+  2  (studentname varchar2(20),
+  3  studentphno number(10),
+  4  studentregno varchar2(10),
+  5  studentdepartment varchar2(10),
+  6  studenthostelname varchar2(10));
+create table student
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> drop table student;
+
+Table dropped.
+
+SQL> create table student
+  2  (studentname varchar2(20),
+  3  studentphno number(10),
+  4  studentregno varchar2(10),
+  5  studentdepartment varchar2(10),
+  6  studenthostelname varchar2(10));
+
+Table created.
+
+SQL> drop table student2;
+
+Table dropped.
+
+SQL> create table student2 as select * from student;
+
+Table created.
+
+SQL> drop table student3;
+
+Table dropped.
+
+SQL> create table student3 as studentname,studentphno,studentregno from student;
+create table student3 as studentname,studentphno,studentregno from student
+                         *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword
+
+
+SQL> create table student3 as select studentname,studentphno,studentregno from student;
+
+Table created.
+
+SQL> select * from student;
+
+no rows selected
+
+SQL> select * from student3;
+
+no rows selected
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTNAME                                        VARCHAR2(20)
+ STUDENTPHNO                                        NUMBER(10)
+ STUDENTREGNO                                       VARCHAR2(10)
+ STUDENTDEPARTMENT                                  VARCHAR2(10)
+ STUDENTHOSTELNAME                                  VARCHAR2(10)
+
+SQL> desc student2;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTNAME                                        VARCHAR2(20)
+ STUDENTPHNO                                        NUMBER(10)
+ STUDENTREGNO                                       VARCHAR2(10)
+ STUDENTDEPARTMENT                                  VARCHAR2(10)
+ STUDENTHOSTELNAME                                  VARCHAR2(10)
+
+SQL> desc student3;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTNAME                                        VARCHAR2(20)
+ STUDENTPHNO                                        NUMBER(10)
+ STUDENTREGNO                                       VARCHAR2(10)
+
+SQL> drop table student4;
+
+Table dropped.
+
+SQL> craete table student4 as select * from student where 1>2;
+SP2-0734: unknown command beginning "craete tab..." - rest of line ignored.
+SQL> create table student4 as select * from student where 1>2;
+
+Table created.
+
+SQL> desc student4;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTNAME                                        VARCHAR2(20)
+ STUDENTPHNO                                        NUMBER(10)
+ STUDENTREGNO                                       VARCHAR2(10)
+ STUDENTDEPARTMENT                                  VARCHAR2(10)
+ STUDENTHOSTELNAME                                  VARCHAR2(10)
+
+SQL> drop table student5;
+
+Table dropped.
+
+SQL> create table student5 as select studentname,studentphno,studentregno from student where 1=0;
+
+Table created.
+
+SQL> drop table student6;
+
+Table dropped.
+
+SQL> alter table student modify(studentname varchar2(30),studentdepartment varchar2(20));
+
+Table altered.
+
+SQL> alter table student add grade char;
+
+Table altered.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTNAME                                        VARCHAR2(30)
+ STUDENTPHNO                                        NUMBER(10)
+ STUDENTREGNO                                       VARCHAR2(10)
+ STUDENTDEPARTMENT                                  VARCHAR2(20)
+ STUDENTHOSTELNAME                                  VARCHAR2(10)
+ GRADE                                              CHAR(1)
+
+SQL> alter table student drop column studenthostelname;
+
+Table altered.
+
+SQL> rename student6 to student7;
+rename student6 to student7
+*
+ERROR at line 1:
+ORA-04043: object STUDENT6 does not exist
+
+
+SQL> rename student5 to student6;
+
+Table renamed.
+
+SQL> insert into student values('vedadri',9856485962,'11249A180','cse','annapoorani','s');
+insert into student values('vedadri',9856485962,'11249A180','cse','annapoorani','s')
+            *
+ERROR at line 1:
+ORA-00913: too many values
+
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTNAME                                        VARCHAR2(30)
+ STUDENTPHNO                                        NUMBER(10)
+ STUDENTREGNO                                       VARCHAR2(10)
+ STUDENTDEPARTMENT                                  VARCHAR2(20)
+ GRADE                                              CHAR(1)
+
+SQL> insert into student values('vedadri',2574845562,'11249A180','cse','s');
+
+1 row created.
+
+SQL> insert into student values(&studentname,&studentphno,&studentregno,&studentdepartment,&grade);
+Enter value for studentname: karthik
+Enter value for studentphno: 1244578966
+Enter value for studentregno: 11249a160
+Enter value for studentdepartment: cse
+Enter value for grade: s
+old   1: insert into student values(&studentname,&studentphno,&studentregno,&studentdepartment,&grade)
+new   1: insert into student values(karthik,1244578966,11249a160,cse,s)
+insert into student values(karthik,1244578966,11249a160,cse,s)
+                                                   *
+ERROR at line 1:
+ORA-00917: missing comma
+
+
+SQL> insert into student values('&studentname',&studentphno,'&studentregno','&studentdepartment','&grade');
+Enter value for studentname: karthik
+Enter value for studentphno: 1245789632
+Enter value for studentregno: 11249a160
+Enter value for studentdepartment: cse
+Enter value for grade: s
+old   1: insert into student values('&studentname',&studentphno,'&studentregno','&studentdepartment','&grade')
+new   1: insert into student values('karthik',1245789632,'11249a160','cse','s')
+
+1 row created.
+
+SQL> /
+Enter value for studentname: koushik
+Enter value for studentphno: 4578966545
+Enter value for studentregno: 11249a388
+Enter value for studentdepartment: mech
+Enter value for grade: s
+old   1: insert into student values('&studentname',&studentphno,'&studentregno','&studentdepartment','&grade')
+new   1: insert into student values('koushik',4578966545,'11249a388','mech','s')
+
+1 row created.
+
+SQL> /
+Enter value for studentname: naresh
+Enter value for studentphno: 1274859632
+Enter value for studentregno: 11249a150
+Enter value for studentdepartment: civil
+Enter value for grade: s
+old   1: insert into student values('&studentname',&studentphno,'&studentregno','&studentdepartment','&grade')
+new   1: insert into student values('naresh',1274859632,'11249a150','civil','s')
+
+1 row created.
+
+SQL> select
+  2
+SQL>
+SQL>
+SQL> select * from student;
+
+STUDENTNAME                    STUDENTPHNO STUDENTREG STUDENTDEPARTMENT    G
+------------------------------ ----------- ---------- -------------------- -
+vedadri                         2574845562 11249A180  cse                  s
+karthik                         1245789632 11249a160  cse                  s
+koushik                         4578966545 11249a388  mech                 s
+naresh                          1274859632 11249a150  civil                s
+
+SQL> insert into student1 select * from student;
+insert into student1 select * from student
+            *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> insert into student1 select * from student;
+insert into student1 select * from student
+            *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> desc student1;
+ERROR:
+ORA-04043: object student1 does not exist
+
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTNAME                                        VARCHAR2(30)
+ STUDENTPHNO                                        NUMBER(10)
+ STUDENTREGNO                                       VARCHAR2(10)
+ STUDENTDEPARTMENT                                  VARCHAR2(20)
+ GRADE                                              CHAR(1)
+
+SQL> desc student1;
+ERROR:
+ORA-04043: object student1 does not exist
+
+
+SQL> desc student2;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTNAME                                        VARCHAR2(20)
+ STUDENTPHNO                                        NUMBER(10)
+ STUDENTREGNO                                       VARCHAR2(10)
+ STUDENTDEPARTMENT                                  VARCHAR2(10)
+ STUDENTHOSTELNAME                                  VARCHAR2(10)
+
+SQL> create table student1 as select * from student;
+
+Table created.
+
+SQL> desc student1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTNAME                                        VARCHAR2(30)
+ STUDENTPHNO                                        NUMBER(10)
+ STUDENTREGNO                                       VARCHAR2(10)
+ STUDENTDEPARTMENT                                  VARCHAR2(20)
+ GRADE                                              CHAR(1)
+
+SQL> insert into student1 select * from student;
+
+4 rows created.
+
+SQL> select * from student1;
+
+STUDENTNAME                    STUDENTPHNO STUDENTREG STUDENTDEPARTMENT    G
+------------------------------ ----------- ---------- -------------------- -
+vedadri                         2574845562 11249A180  cse                  s
+karthik                         1245789632 11249a160  cse                  s
+koushik                         4578966545 11249a388  mech                 s
+naresh                          1274859632 11249a150  civil                s
+vedadri                         2574845562 11249A180  cse                  s
+karthik                         1245789632 11249a160  cse                  s
+koushik                         4578966545 11249a388  mech                 s
+naresh                          1274859632 11249a150  civil                s
+
+8 rows selected.
+
+SQL> insert into student(studentname,studentphno,studentregno) select studentname,studentphno,studentregno from student;
+
+4 rows created.
+
+SQL> select * from student3;
+
+no rows selected
+
+SQL> insert into student3(studentname,studentphno,studentregno) select studentname,studentphno,studentregno from student;
+
+8 rows created.
+
+SQL> select * from student3;
+
+STUDENTNAME          STUDENTPHNO STUDENTREG
+-------------------- ----------- ----------
+vedadri               2574845562 11249A180
+karthik               1245789632 11249a160
+koushik               4578966545 11249a388
+naresh                1274859632 11249a150
+vedadri               2574845562 11249A180
+karthik               1245789632 11249a160
+koushik               4578966545 11249a388
+naresh                1274859632 11249a150
+
+8 rows selected.
+
+SQL> desc student4;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTNAME                                        VARCHAR2(20)
+ STUDENTPHNO                                        NUMBER(10)
+ STUDENTREGNO                                       VARCHAR2(10)
+ STUDENTDEPARTMENT                                  VARCHAR2(10)
+ STUDENTHOSTELNAME                                  VARCHAR2(10)
+
+SQL> select * from student4;
+
+no rows selected
+
+SQL> create table student7 as select * from student;
+
+Table created.
+
+SQL> insert into student7 select * from student;
+
+8 rows created.
+
+SQL> select * from student7;
+
+STUDENTNAME                    STUDENTPHNO STUDENTREG STUDENTDEPARTMENT    G
+------------------------------ ----------- ---------- -------------------- -
+vedadri                         2574845562 11249A180  cse                  s
+karthik                         1245789632 11249a160  cse                  s
+koushik                         4578966545 11249a388  mech                 s
+naresh                          1274859632 11249a150  civil                s
+vedadri                         2574845562 11249A180
+karthik                         1245789632 11249a160
+koushik                         4578966545 11249a388
+naresh                          1274859632 11249a150
+vedadri                         2574845562 11249A180  cse                  s
+karthik                         1245789632 11249a160  cse                  s
+koushik                         4578966545 11249a388  mech                 s
+
+STUDENTNAME                    STUDENTPHNO STUDENTREG STUDENTDEPARTMENT    G
+------------------------------ ----------- ---------- -------------------- -
+naresh                          1274859632 11249a150  civil                s
+vedadri                         2574845562 11249A180
+karthik                         1245789632 11249a160
+koushik                         4578966545 11249a388
+naresh                          1274859632 11249a150
+
+16 rows selected.
+
+SQL> create table student8 as select * from student3;
+
+Table created.
+
+SQL> insert into student8(studentname,studentphno,studentregno) select studentname,studentphno,studentregno from student;
+
+8 rows created.
+
+SQL> select * from student8;
+
+STUDENTNAME          STUDENTPHNO STUDENTREG
+-------------------- ----------- ----------
+vedadri               2574845562 11249A180
+karthik               1245789632 11249a160
+koushik               4578966545 11249a388
+naresh                1274859632 11249a150
+vedadri               2574845562 11249A180
+karthik               1245789632 11249a160
+koushik               4578966545 11249a388
+naresh                1274859632 11249a150
+vedadri               2574845562 11249A180
+karthik               1245789632 11249a160
+koushik               4578966545 11249a388
+
+STUDENTNAME          STUDENTPHNO STUDENTREG
+-------------------- ----------- ----------
+naresh                1274859632 11249a150
+vedadri               2574845562 11249A180
+karthik               1245789632 11249a160
+koushik               4578966545 11249a388
+naresh                1274859632 11249a150
+
+16 rows selected.
