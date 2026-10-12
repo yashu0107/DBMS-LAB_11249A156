@@ -1,0 +1,487 @@
+11249A156                                date:5-10-2026
+
+Enter user-name: A156@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> SET SERVEROUTPUT ON;
+SQL>
+SQL> DECLARE
+  2      N NUMBER;
+  3  BEGIN
+  4      N := &N;
+  5
+  6      IF N > 0 THEN
+  7          DBMS_OUTPUT.PUT_LINE('The number is Positive');
+  8
+  9      ELSIF N < 0 THEN
+ 10          DBMS_OUTPUT.PUT_LINE('The number is Negative');
+ 11
+ 12      ELSE
+ 13          DBMS_OUTPUT.PUT_LINE('The number is Zero');
+ 14      END IF;
+ 15  END;
+ 16  /
+Enter value for n: 25
+old   4:     N := &N;
+new   4:     N := 25;
+The number is Positive
+
+PL/SQL procedure successfully completed.
+
+SQL> /
+Enter value for n: -15
+old   4:     N := &N;
+new   4:     N := -15;
+The number is Negative
+
+PL/SQL procedure successfully completed.
+
+SQL> /
+Enter value for n: 0
+old   4:     N := &N;
+new   4:     N := 0;
+The number is Zero
+
+PL/SQL procedure successfully completed.
+
+SQL> SET SERVEROUTPUT ON;
+SQL>
+SQL> DECLARE
+  2      A NUMBER := 100;
+  3      B NUMBER := 0;
+  4      C NUMBER;
+  5
+  6  BEGIN
+  7      C := A / B;
+  8
+  9      DBMS_OUTPUT.PUT_LINE('Result = ' || C);
+ 10
+ 11  EXCEPTION
+ 12      WHEN ZERO_DIVIDE THEN
+ 13          DBMS_OUTPUT.PUT_LINE('Error: Division by Zero is not allowed.');
+ 14  END;
+ 15  /
+Error: Division by Zero is not allowed.
+
+PL/SQL procedure successfully completed.
+
+SQL> drop table student;
+
+Table dropped.
+
+SQL> CREATE TABLE STUDENT (
+  2      STUDENT_ID NUMBER PRIMARY KEY,
+  3      STUDENT_NAME VARCHAR2(30)
+  4  );
+
+Table created.
+
+SQL>
+SQL> INSERT INTO STUDENT VALUES (101, 'ARUN');
+
+1 row created.
+
+SQL>
+SQL> COMMIT;
+
+Commit complete.
+
+SQL>
+SQL> SET SERVEROUTPUT ON;
+SQL>
+SQL> DECLARE
+  2      V_NAME STUDENT.STUDENT_NAME%TYPE;
+  3
+  4  BEGIN
+  5      SELECT STUDENT_NAME
+  6      INTO V_NAME
+  7      FROM STUDENT
+  8      WHERE STUDENT_ID = 999;
+  9
+ 10      DBMS_OUTPUT.PUT_LINE(V_NAME);
+ 11
+ 12  EXCEPTION
+ 13      WHEN NO_DATA_FOUND THEN
+ 14          DBMS_OUTPUT.PUT_LINE('Error: No matching record found.');
+ 15  END;
+ 16  /
+Error: No matching record found.
+
+PL/SQL procedure successfully completed.
+
+SQL> SET SERVEROUTPUT ON;
+SQL>
+SQL> DECLARE
+  2      V_NAME STUDENT.STUDENT_NAME%TYPE;
+  3
+  4  BEGIN
+  5      SELECT STUDENT_NAME
+  6      INTO V_NAME
+  7      FROM STUDENT;
+  8
+  9      DBMS_OUTPUT.PUT_LINE(V_NAME);
+ 10
+ 11  EXCEPTION
+ 12      WHEN TOO_MANY_ROWS THEN
+ 13          DBMS_OUTPUT.PUT_LINE('Error: Query returned multiple rows.');
+ 14  END;
+ 15  /
+ARUN
+
+PL/SQL procedure successfully completed.
+
+SQL> SET SERVEROUTPUT ON;
+SQL>
+SQL> DECLARE
+  2      V_NAME STUDENT.STUDENT_NAME%TYPE;
+  3
+  4  BEGIN
+  5      SELECT STUDENT_NAME
+  6      INTO V_NAME
+  7      FROM STUDENT;
+  8
+  9      DBMS_OUTPUT.PUT_LINE(V_NAME);
+ 10
+ 11  EXCEPTION
+ 12      WHEN TOO_MANY_ROWS THEN
+ 13          DBMS_OUTPUT.PUT_LINE('Error: Query returned multiple rows.');
+ 14  END;
+ 15  /
+ARUN
+
+PL/SQL procedure successfully completed.
+
+SQL> SET SERVEROUTPUT ON;
+SQL>
+SQL> DECLARE
+  2      V_NAME STUDENT.STUDENT_NAME%TYPE;
+  3
+  4  BEGIN
+  5      SELECT STUDENT_NAME
+  6      INTO V_NAME
+  7      FROM STUDENT;
+  8
+  9      DBMS_OUTPUT.PUT_LINE(V_NAME);
+ 10
+ 11  EXCEPTION
+ 12      WHEN TOO_MANY_ROWS THEN
+ 13          DBMS_OUTPUT.PUT_LINE('Error: Query returned multiple rows.');
+ 14  END;
+ 15  /
+ARUN
+
+PL/SQL procedure successfully completed.
+
+SQL> SET SERVEROUTPUT ON;
+SQL>
+SQL> BEGIN
+  2      INSERT INTO STUDENT VALUES (101, 'BALA');
+  3
+  4  EXCEPTION
+  5      WHEN DUP_VAL_ON_INDEX THEN
+  6          DBMS_OUTPUT.PUT_LINE('Error: Duplicate value violates unique constraint.');
+  7  END;
+  8  /
+Error: Duplicate value violates unique constraint.
+
+PL/SQL procedure successfully completed.
+
+SQL> SET SERVEROUTPUT ON;
+SQL>
+SQL> DECLARE
+  2      V_NUM NUMBER(2);
+  3
+  4  BEGIN
+  5      V_NUM := 12345;
+  6
+  7  EXCEPTION
+  8      WHEN VALUE_ERROR THEN
+  9          DBMS_OUTPUT.PUT_LINE('Error: Value exceeds variable size.');
+ 10  END;
+ 11  /
+Error: Value exceeds variable size.
+
+PL/SQL procedure successfully completed.
+
+SQL> SET SERVEROUTPUT ON;
+SQL>
+SQL> DECLARE
+  2      V_NUM NUMBER;
+  3
+  4  BEGIN
+  5      V_NUM := 10 / 0;
+  6
+  7  EXCEPTION
+  8      WHEN OTHERS THEN
+  9          DBMS_OUTPUT.PUT_LINE('SQLCODE : ' || SQLCODE);
+ 10          DBMS_OUTPUT.PUT_LINE('SQLERRM : ' || SQLERRM);
+ 11  END;
+ 12  /
+SQLCODE : -1476
+SQLERRM : ORA-01476: divisor is equal to zero
+
+PL/SQL procedure successfully completed.
+
+SQL> drop table student;
+
+Table dropped.
+
+SQL> create table student(
+  2  student_id number(5) primary key,
+  3  student_name varchar2(30),
+  4  marks number(3));
+
+Table created.
+
+SQL> insert into student values
+  2  /
+insert into student values
+                         *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> insert into student values (101,'arun',85);
+
+1 row created.
+
+SQL> insert into student values (102,'bala',72);
+
+1 row created.
+
+SQL> insert into student values (103,'divya',91);commit;
+insert into student values (103,'divya',91);commit
+                                           *
+ERROR at line 1:
+ORA-00911: invalid character
+
+
+SQL>  insert into student values (103,'divya',91);
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> SET SERVEROUTPUT ON;
+SQL>
+SQL> CREATE OR REPLACE PROCEDURE GET_STUDENT (
+  2      P_ID IN NUMBER
+  3  ) IS
+  4      V_NAME  STUDENT.STUDENT_NAME%TYPE;
+  5      V_MARKS STUDENT.MARKS%TYPE;
+  6
+  7  BEGIN
+  8      SELECT STUDENT_NAME, MARKS
+  9      INTO V_NAME, V_MARKS
+ 10      FROM STUDENT
+ 11      WHERE STUDENT_ID = P_ID;
+ 12
+ 13      DBMS_OUTPUT.PUT_LINE('Student Name : ' || V_NAME);
+ 14      DBMS_OUTPUT.PUT_LINE('Marks : ' || V_MARKS);
+ 15
+ 16  EXCEPTION
+ 17      WHEN NO_DATA_FOUND THEN
+ 18          DBMS_OUTPUT.PUT_LINE('Student Record Not Found.');
+ 19  END;
+ 20  /
+
+Procedure created.
+
+SQL> SET SERVEROUTPUT ON;
+SQL> EXEC GET_STUDENT(101);
+Student Name : arun
+Marks : 85
+
+PL/SQL procedure successfully completed.
+
+SQL> EXEC GET_STUDENT(110);
+Student Record Not Found.
+
+PL/SQL procedure successfully completed.
+
+SQL> CREATE OR REPLACE FUNCTION FIND_GRADE
+  2  (
+  3   P_MARKS NUMBER
+  4  )
+  5  RETURN VARCHAR2
+  6  IS
+  7   V_GRADE VARCHAR2(2);
+  8  BEGIN
+  9   IF P_MARKS >= 90 THEN
+ 10   V_GRADE := 'O';
+ 11   ELSIF P_MARKS >= 80 THEN
+ 12   V_GRADE := 'A+';
+ 13   ELSIF P_MARKS >= 70 THEN
+ 14   V_GRADE := 'A';
+ 15   ELSIF P_MARKS >= 60 THEN
+ 16   V_GRADE := 'B';
+ 17   ELSE
+ 18   V_GRADE := 'C';
+ 19   END IF;
+ 20   RETURN V_GRADE;
+ 21  END;
+ 22  /
+
+Function created.
+
+SQL> SELECT FIND_GRADE(91) AS GRADE FROM DUAL;
+
+GRADE
+--------------------------------------------------------------------------------
+O
+
+SQL> SELECT FIND_GRADE(75) AS GRADE FROM DUAL;
+
+GRADE
+--------------------------------------------------------------------------------
+A
+
+SQL> SELECT STUDENT_ID, STUDENT_NAME, MARKS,
+  2   FIND_GRADE(MARKS) AS GRADE
+  3  FROM STUDENT;
+
+STUDENT_ID STUDENT_NAME                        MARKS
+---------- ------------------------------ ----------
+GRADE
+--------------------------------------------------------------------------------
+       101 arun                                   85
+A+
+
+       102 bala                                   72
+A
+
+       103 divya                                  91
+O
+
+
+SQL> SELECT OBJECT_NAME, OBJECT_TYPE
+  2  FROM USER_OBJECTS
+  3  WHERE OBJECT_TYPE = 'PROCEDURE';
+
+OBJECT_NAME
+--------------------------------------------------------------------------------
+OBJECT_TYPE
+-------------------
+GET_STUDENT
+PROCEDURE
+
+
+SQL> SELECT OBJECT_NAME, OBJECT_TYPE
+  2  FROM USER_OBJECTS
+  3  WHERE OBJECT_TYPE = 'FUNCTION';
+
+OBJECT_NAME
+--------------------------------------------------------------------------------
+OBJECT_TYPE
+-------------------
+FIND_GRADE
+FUNCTION
+
+
+SQL> drop table employee;
+
+Table dropped.
+
+SQL> CREATE TABLE EMPLOYEE
+  2  (
+  3   EMP_ID NUMBER(5) PRIMARY KEY,
+  4   EMP_NAME VARCHAR2(30),
+  5   DEPARTMENT VARCHAR2(20),
+  6   SALARY NUMBER(8)
+  7  );
+
+Table created.
+
+SQL> INSERT INTO EMPLOYEE VALUES (101,'ARUN','CSE',35000);
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE VALUES (102,'BALA','ECE',32000);
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE VALUES (103,'DIVYA','IT',45000);
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE VALUES (104,'KAVI','CSE',40000);
+
+1 row created.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SET SERVEROUTPUT ON;
+SQL> BEGIN
+  2   UPDATE EMPLOYEE
+  3   SET SALARY = SALARY + 5000
+  4   WHERE DEPARTMENT = 'CSE';
+  5   DBMS_OUTPUT.PUT_LINE(SQL%ROWCOUNT || ' row(s) updated.');
+  6   COMMIT;
+  7  END;
+  8  /
+2 row(s) updated.
+
+PL/SQL procedure successfully completed.
+
+SQL> SELECT * FROM EMPLOYEE;
+
+    EMP_ID EMP_NAME                       DEPARTMENT               SALARY
+---------- ------------------------------ -------------------- ----------
+       101 ARUN                           CSE                       40000
+       102 BALA                           ECE                       32000
+       103 DIVYA                          IT                        45000
+       104 KAVI                           CSE                       45000
+
+SQL> SET SERVEROUTPUT ON;
+SQL> DECLARE
+  2   CURSOR EMP_CURSOR IS
+  3   SELECT EMP_ID, EMP_NAME, DEPARTMENT, SALARY
+  4   FROM EMPLOYEE;
+  5   V_ID EMPLOYEE.EMP_ID%TYPE;
+  6   V_NAME EMPLOYEE.EMP_NAME%TYPE;
+  7   V_DEPT EMPLOYEE.DEPARTMENT%TYPE;
+  8   V_SAL EMPLOYEE.SALARY%TYPE;
+  9  BEGIN
+ 10   OPEN EMP_CURSOR;
+ 11   LOOP
+ 12   FETCH EMP_CURSOR INTO V_ID, V_NAME, V_DEPT, V_SAL;
+ 13   EXIT WHEN EMP_CURSOR%NOTFOUND;
+ 14   DBMS_OUTPUT.PUT_LINE(V_ID || ' ' || V_NAME || ' ' ||
+ 15   V_DEPT || ' ' || V_SAL);
+ 16   END LOOP;
+ 17   CLOSE EMP_CURSOR;
+ 18  END;
+ 19  /
+101 ARUN CSE 40000
+102 BALA ECE 32000
+103 DIVYA IT 45000
+104 KAVI CSE 45000
+
+PL/SQL procedure successfully completed.
+
+SQL> SET SERVEROUTPUT ON;
+SQL> DECLARE
+  2   CURSOR EMP_CURSOR IS
+  3   SELECT EMP_ID, EMP_NAME, SALARY
+  4   FROM EMPLOYEE;
+  5  BEGIN
+  6   FOR EMP_REC IN EMP_CURSOR LOOP
+  7   DBMS_OUTPUT.PUT_LINE(EMP_REC.EMP_ID || ' ' ||
+  8   EMP_REC.EMP_NAME || ' ' ||
+  9   EMP_REC.SALARY);
+ 10   END LOOP;
+ 11  END;
+ 12  /
+101 ARUN 40000
+102 BALA 32000
+103 DIVYA 45000
+104 KAVI 45000
+
+PL/SQL procedure successfully completed.

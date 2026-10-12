@@ -1,0 +1,313 @@
+
+date:7-09-2026    reg:11249A156
+
+SQL> drop table student;
+
+Table dropped.
+
+SQL> create table student(
+  2  student_id number(5) primary key,
+  3  student_name varchar2(30),
+  4  department varchar2(20),
+  5  marks number(3));
+
+Table created.
+
+SQL> insert into student values (101,'arun','cse',85);
+
+1 row created.
+
+SQL> insert into student values (102,'bala','ece',78);
+
+1 row created.
+
+SQL> insert into student values (103,'divya','it',92);
+
+1 row created.
+
+SQL> insert into student values (014,'kavi','cse',88);
+
+1 row created.
+
+SQL> insert into student values (105,'ravi','ece',81);
+
+1 row created.
+
+SQL> insert into student values (106,'suresh','it',95);
+
+1 row created.
+
+SQL> select count(*) as total_students
+  2  from student;
+
+TOTAL_STUDENTS
+--------------
+             6
+
+SQL> select sum(marks) as total_marks from student;
+
+TOTAL_MARKS
+-----------
+        519
+
+SQL> select avg(marks) as average_marks frim student;
+select avg(marks) as average_marks frim student
+                                   *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> select avg(marks) as average_marks from student;
+
+AVERAGE_MARKS
+-------------
+         86.5
+
+SQL> select max(marks
+  2  ) as highest_mark from student;
+
+HIGHEST_MARK
+------------
+          95
+
+SQL> select min(marks) as lowest_mark from student;
+
+LOWEST_MARK
+-----------
+         78
+
+SQL> select department, avg(marks) as avg_marks from student group by department;
+
+DEPARTMENT            AVG_MARKS
+-------------------- ----------
+cse                        86.5
+it                         93.5
+ece                        79.5
+
+SQL> select department, count(*) as total_students from student group by department;
+
+DEPARTMENT           TOTAL_STUDENTS
+-------------------- --------------
+cse                               2
+it                                2
+ece                               2
+
+SQL> select department, max(marks) as max_marks from student group by department;
+
+DEPARTMENT            MAX_MARKS
+-------------------- ----------
+cse                          88
+it                           95
+ece                          81
+
+SQL> select department, avg(marks) as avg_marks from student group by department having avg(marks) > 85;
+
+DEPARTMENT            AVG_MARKS
+-------------------- ----------
+cse                        86.5
+it                         93.5
+
+SQL> select department, count(*) as total_students from student group by department having count(*) > 1;
+
+DEPARTMENT           TOTAL_STUDENTS
+-------------------- --------------
+cse                               2
+it                                2
+ece                               2
+
+SQL> select department, count(*) as no_of_students, avg(marks) as avg_marks, max(marks) as highest_mark from student group by department
+  2  having avg(marks) > 80;
+
+DEPARTMENT           NO_OF_STUDENTS  AVG_MARKS HIGHEST_MARK
+-------------------- -------------- ---------- ------------
+cse                               2       86.5           88
+it                                2       93.5           95
+
+SQL> select * from student;
+
+STUDENT_ID STUDENT_NAME                   DEPARTMENT                MARKS
+---------- ------------------------------ -------------------- ----------
+       101 arun                           cse                          85
+       102 bala                           ece                          78
+       103 divya                          it                           92
+        14 kavi                           cse                          88
+       105 ravi                           ece                          81
+       106 suresh                         it                           95
+
+6 rows selected.
+
+SQL> DROP TABLE department CASCADE CONSTRAINTS;
+
+Table dropped.
+
+SQL> create table department(
+  2  dept_id number(3) primary key,
+  3  dept_name varchar2(30));
+
+Table created.
+
+SQL> insert into department values (101,'cse');
+
+1 row created.
+
+SQL> insert into department values (102,'ece');
+
+1 row created.
+
+SQL> insert into department values (103,'it');
+
+1 row created.
+
+SQL> drop table student;
+
+Table dropped.
+
+SQL> create table student(
+  2  student_id number(5) primary key,
+  3  student_name varchar2(30),
+  4  marks number(3),
+  5  dept_id number(3),
+  6  constraint fk_dept foreign key (dept_id) references department(dept_id));
+
+Table created.
+
+SQL> insert into student values (1001,'venkatram',85,101);
+
+1 row created.
+
+SQL> insert into student values (1002,'vedadri',78,102);
+
+1 row created.
+
+SQL> insert into student values (1003,'naresh',92,103);
+
+1 row created.
+
+SQL> insert into student values (1004,'kavi',88,101);
+
+1 row created.
+
+SQL> select s.student_id, s.student_name,d.dept_name from student s
+  2  inner join department d
+  3  on s.dept_id = d.dept_id;
+
+STUDENT_ID STUDENT_NAME                   DEPT_NAME
+---------- ------------------------------ ------------------------------
+      1001 venkatram                      cse
+      1002 vedadri                        ece
+      1003 naresh                         it
+      1004 kavi                           cse
+
+SQL> select s.student_name, d.dept_name
+  2  from student s
+  3  left outer join department d
+  4  on s.dept_id = d.dept_id;
+
+STUDENT_NAME                   DEPT_NAME
+------------------------------ ------------------------------
+kavi                           cse
+venkatram                      cse
+vedadri                        ece
+naresh                         it
+
+SQL> SELECT S.STUDENT_NAME, D.DEPT_NAME
+  2  FROM STUDENT S
+  3  RIGHT OUTER JOIN DEPARTMENT D
+  4   ON S.DEPT_ID = D.DEPT_ID;
+
+STUDENT_NAME                   DEPT_NAME
+------------------------------ ------------------------------
+venkatram                      cse
+vedadri                        ece
+naresh                         it
+kavi                           cse
+
+SQL> select s.student_name, d.dept_name
+  2  from student s
+  3  full outer join department d
+  4  on s.dept_id = d.dept_id;
+
+STUDENT_NAME                   DEPT_NAME
+------------------------------ ------------------------------
+venkatram                      cse
+vedadri                        ece
+naresh                         it
+kavi                           cse
+
+SQL> drop table employee;
+
+Table dropped.
+
+SQL> create table employee(
+  2  emp_id number(5) primary key,
+  3  emp_name varchar2(30),
+  4  manager_id number(5));
+
+Table created.
+
+SQL> insert into employee values (1,'koushik',null);
+
+1 row created.
+
+SQL> insert into employee values (2,'arun',1);
+
+1 row created.
+
+SQL> insert into employee values (3,'bala',10;
+
+SQL> insert into employee values (3,'bala',10);
+
+1 row created.
+
+SQL> select e.emp_name employee, m.emp_name manager
+  2  from employee e
+  3  left join employee m
+  4  on e.manager_id = m.emp_id;
+
+EMPLOYEE                       MANAGER
+------------------------------ ------------------------------
+koushik
+arun                           koushik
+bala
+
+SQL> select student_name, marks
+  2  from student
+  3  where marks >
+  4  (
+  5  select avg(marks)
+  6  from student
+  7  );
+
+STUDENT_NAME                        MARKS
+------------------------------ ----------
+naresh                                 92
+kavi                                   88
+
+SQL> select student_name
+  2  from student
+  3  where dept_id in
+  4  (
+  5  select dept_id
+  6  from department
+  7  where dept_name = 'cse'
+  8  );
+
+STUDENT_NAME
+------------------------------
+venkatram
+kavi
+
+SQL> select student_name, marks, dept_id
+  2  from student s1
+  3  where marks =
+  4  (
+  5  select max(marks)
+  6  from student s2
+  7  where s1.dept_id = s2.dept_id
+  8  );
+
+STUDENT_NAME                        MARKS    DEPT_ID
+------------------------------ ---------- ----------
+vedadri                                78        102
+naresh                                 92        103
+kavi                                   88        101

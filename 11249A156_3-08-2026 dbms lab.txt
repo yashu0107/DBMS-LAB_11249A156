@@ -1,0 +1,303 @@
+Enter user-name: A156@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> drop table Employee
+  2
+SQL> drop table employee;
+
+Table dropped.
+
+SQL> CREATE TABLE Employee (
+  2      Empno INT PRIMARY KEY,
+  3      Ename VARCHAR(20),
+  4      Job DATE,
+  5      Sal DECIMAL(5,2)
+  6  );
+
+Table created.
+
+
+SQL> CREATE TABLE Employee1 (
+  2      Empno INT,
+  3      Ename VARCHAR(20),
+  4      Job DATE,
+  5      Sal DECIMAL(5,2),
+  6      CONSTRAINT emp_pkey PRIMARY KEY (Empno)
+  7  );
+
+Table created.
+
+SQL> desc Employee
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPNO                                     NOT NULL NUMBER(38)
+ ENAME                                              VARCHAR2(20)
+ JOB                                                DATE
+ SAL                                                NUMBER(5,2)
+
+SQL> desc EMployee1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPNO                                     NOT NULL NUMBER(38)
+ ENAME                                              VARCHAR2(20)
+ JOB                                                DATE
+ SAL                                                NUMBER(5,2)
+
+
+
+SQL> create table Employee(
+  2
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUNO                                     NOT NULL NUMBER(10)
+ STUNAME                                            VARCHAR2(20)
+ DOB                                                DATE
+ FEES                                               NUMBER(6)
+
+SQL> drop table student;
+
+Table dropped.
+
+SQL> create table student(
+  2  stunam varchar2(20),
+  3  sturegno number(10) Primary Key,
+  4  DOB date,
+  5  fee number(10));
+
+Table created.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUNAM                                             VARCHAR2(20)
+ STUREGNO                                  NOT NULL NUMBER(10)
+ DOB                                                DATE
+ FEE                                                NUMBER(10)
+
+SQL> insert into student values('koushik',201,'01-jun-2006',30000);
+
+1 row created.
+
+SQL> insert into student values('venakat ram',204,'01-jul-2006',40000);
+
+1 row created.
+
+SQL> select * from student;
+
+STUNAM                 STUREGNO DOB              FEE
+-------------------- ---------- --------- ----------
+koushik                     201 01-JUN-06      30000
+venakat ram                 204 01-JUL-06      40000
+
+SQL> create table student1(
+  2  stuno number(10) constraint stu_pkey primary key,
+  3  stuname varchar2(20),
+  4  DOB Date,
+  5  fee number(10));
+
+Table created.
+
+SQL> desc student1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUNO                                     NOT NULL NUMBER(10)
+ STUNAME                                            VARCHAR2(20)
+ DOB                                                DATE
+ FEE                                                NUMBER(10)
+
+
+
+SQL> insert into student1 values(208,'vedadri','10-feb-2005',300000);
+
+1 row created.
+
+SQL> insert into student1 values(298,'anmol','10-feb-2065',400000);
+
+1 row created.
+
+SQL> drop table student2;
+
+Table dropped.
+
+
+SQL> CREATE TABLE Dept (
+  2      deptno NUMBER(2) PRIMARY KEY,
+  3      deptname VARCHAR2(20)
+  4  );
+
+Table created.
+
+SQL> CREATE TABLE Student2 (
+  2      stuno NUMBER(6),
+  3      stuname VARCHAR2(20),
+  4      deptno NUMBER(2)
+  5          CONSTRAINT Stu_Fkey REFERENCES Dept(deptno),
+  6      fees NUMBER(5)
+  7  );
+
+Table created.
+
+SQL> desc student2;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUNO                                              NUMBER(6)
+ STUNAME                                            VARCHAR2(20)
+ DEPTNO                                             NUMBER(2)
+ FEES                                               NUMBER(5)
+
+SQL> CREATE TABLE Department (
+  2      deptid NUMBER(3),
+  3      name VARCHAR2(30) UNIQUE
+  4  );
+
+Table created.
+
+SQL> create table students(
+  2  regno NUMBER(6),    name VARCHAR2(30),    age NUMBER(2),    email VARCHAR2(50),    CONSTRAINT stu_pk PRIMARY KEY (regno),    CONSTRAINT stu_fk FOREIGN KEY (name)        REFERENCES Department(name),    CONSTRAINT age_ck CHECK (age >= 18 AND age <= 30),    CONSTRAINT email_uk UNIQUE (email));
+
+Table created.
+
+SQL> desc Department;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEPTID                                             NUMBER(3)
+ NAME                                               VARCHAR2(30)
+
+SQL> desc students;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                     NOT NULL NUMBER(6)
+ NAME                                               VARCHAR2(30)
+ AGE                                                NUMBER(2)
+ EMAIL                                              VARCHAR2(50)
+
+
+
+SQL> create table depart(
+  2  deptid number(5) primary key,
+  3  deptname varchar2(20) NOT NULL);
+
+Table created.
+
+
+SQL> CREATE TABLE Deptartment (
+  2      DeptNO NUMBER(2) PRIMARY KEY,
+  3      DeptName VARCHAR2(30)
+  4  );
+
+Table created.
+
+SQL> CREATE TABLE students3 (
+  2      regno NUMBER(6) CONSTRAINT Stu3_pk PRIMARY KEY,
+  3      name VARCHAR2(30),
+  4      age NUMBER(2) CONSTRAINT Stu3_age_ck CHECK (age >= 18),
+  5      email VARCHAR2(50) CONSTRAINT Stu3_email_uk UNIQUE,
+  6      Deptno NUMBER(2) CONSTRAINT Stu3_Dept_fk REFERENCES Dept(DeptNO)
+  7  );
+
+Table created.
+
+SQL> desc department;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEPTID                                             NUMBER(3)
+ NAME                                               VARCHAR2(30)
+
+SQL> desc students3;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                     NOT NULL NUMBER(6)
+ NAME                                               VARCHAR2(30)
+ AGE                                                NUMBER(2)
+ EMAIL                                              VARCHAR2(50)
+ DEPTNO                                             NUMBER(2)
+
+SQL> insert into department values(10,'cse');
+
+1 row created.
+
+SQL> insert into department values(11,'ece');
+
+1 row created.
+
+SQL> insert into department values(13,'civil');
+
+1 row created.
+
+SQL> select * from department;
+
+    DEPTID NAME
+---------- ------------------------------
+        10 cse
+        11 ece
+        13 civil
+
+SQL> INSERT INTO Dept VALUES (10, 'CSE');
+
+1 row created.
+
+SQL> INSERT INTO Dept VALUES (20, 'ECE');
+
+1 row created.
+
+SQL> INSERT INTO Dept VALUES (30, 'IT');
+
+1 row created.
+
+SQL> INSERT INTO Dept VALUES (40, 'MECH');
+
+1 row created.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> INSERT INTO Students3
+  2  VALUES (101, 'Ravi', 20, 'ravi@gmail.com', 10);
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO Students3
+  2  VALUES (102, 'Priya', 21, 'priya@gmail.com', 20);
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO Students3
+  2  VALUES (103, 'Arun', 22, 'arun@gmail.com', 30);
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO Students3
+  2  VALUES (104, 'Divya', 19, 'divya@gmail.com', 40);
+
+1 row created.
+
+SQL> SELECT * FROM Students3;
+
+     REGNO NAME                                  AGE
+---------- ------------------------------ ----------
+EMAIL                                                  DEPTNO
+-------------------------------------------------- ----------
+       101 Ravi                                   20
+ravi@gmail.com                                             10
+
+       102 Priya                                  21
+priya@gmail.com                                            20
+
+       103 Arun                                   22
+arun@gmail.com                                             30
+
+
+     REGNO NAME                                  AGE
+---------- ------------------------------ ----------
+EMAIL                                                  DEPTNO
+-------------------------------------------------- ----------
+       104 Divya                                  19
+divya@gmail.com                                            40

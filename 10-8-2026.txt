@@ -1,0 +1,364 @@
+
+SQL*Plus: Release 11.2.0.1.0 Production on Mon Aug 10 11:37:43 2026
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: A156@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> desc student1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUNAME                                   NOT NULL VARCHAR2(30)
+ STUREGNO                                  NOT NULL VARCHAR2(10)
+ STUPHNO                                   NOT NULL NUMBER(10)
+ AGE                                                NUMBER(2)
+ FEES                                               NUMBER(6)
+ GENDER                                             CHAR(1)
+ DEPTNO                                             NUMBER(3)
+
+SQL> desc studetn;
+ERROR:
+ORA-04043: object studetn does not exist
+
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUNAME                                            VARCHAR2(30)
+ STUREGNO                                           VARCHAR2(20)
+ AGE                                                NUMBER(2)
+ GENDER                                             CHAR(1)
+ EMAIL                                              VARCHAR2(30)
+
+SQL> select * fromm student1;
+select * fromm student1
+         *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> select * from student1;
+
+STUNAME                        STUREGNO      STUPHNO        AGE       FEES G
+------------------------------ ---------- ---------- ---------- ---------- -
+    DEPTNO
+----------
+hagan                          11249A146  8688810198         18     400000 M
+       101
+
+vamsi                          11249A107  9490404548         20     300000 M
+       101
+
+anmol                          11249A138  1234567890         20     100000 M
+       101
+
+
+SQL> select * from department1;
+
+    DEPTNO DEPTNAME
+---------- ------------------------------
+       102 Mechanical
+       101 computer science
+
+SQL> SELECT constraint_name, constraint_type
+  2  FROM user_constraints
+  3  WHERE table_name = 'STUDENT1';
+
+CONSTRAINT_NAME                C
+------------------------------ -
+NN_STUDENT1_NAME               C
+NN_STUDENT1_REGNO              C
+NN_STUDENT1_PHNO               C
+PK_STUDENT                     P
+UK_STUDENT1_PHONE              U
+CHK_STUDENT1_AGE               C
+CHK_STUDENT1_FEES              C
+CHK_STUDENT1_GENDER            C
+FK_STUDENT1_DEPT               R
+
+9 rows selected.
+
+SQL> SELECT constraint_name, constraint_type
+  2  FROM user_constraints
+  3  WHERE table_name = 'DEPARTMENT1';
+
+CONSTRAINT_NAME                C
+------------------------------ -
+SYS_C0031088                   P
+
+SQL> SELECT constraint_name
+  2  FROM user_constraints
+  3  WHERE table_name = 'STUDENT1'
+  4  AND constraint_type = 'P';
+
+CONSTRAINT_NAME
+------------------------------
+PK_STUDENT
+
+SQL> SELECT constraint_name
+  2  FROM user_constraints
+  3  WHERE table_name = 'STUDENT1'
+  4  AND constraint_type = 'R';
+
+CONSTRAINT_NAME
+------------------------------
+FK_STUDENT1_DEPT
+
+SQL> SELECT c.constraint_name,
+  2         c.constraint_type,
+  3         cc.column_name
+  4  FROM user_constraints c
+  5  JOIN user_cons_columns cc
+  6  ON c.constraint_name = cc.constraint_name
+  7  WHERE c.table_name = 'STUDENT1';
+
+CONSTRAINT_NAME                C
+------------------------------ -
+COLUMN_NAME
+--------------------------------------------------------------------------------
+NN_STUDENT1_NAME               C
+STUNAME
+
+NN_STUDENT1_REGNO              C
+STUREGNO
+
+NN_STUDENT1_PHNO               C
+STUPHNO
+
+
+CONSTRAINT_NAME                C
+------------------------------ -
+COLUMN_NAME
+--------------------------------------------------------------------------------
+PK_STUDENT                     P
+STUREGNO
+
+UK_STUDENT1_PHONE              U
+STUPHNO
+
+CHK_STUDENT1_AGE               C
+AGE
+
+
+CONSTRAINT_NAME                C
+------------------------------ -
+COLUMN_NAME
+--------------------------------------------------------------------------------
+CHK_STUDENT1_FEES              C
+FEES
+
+CHK_STUDENT1_GENDER            C
+GENDER
+
+FK_STUDENT1_DEPT               R
+DEPTNO
+
+
+9 rows selected.
+
+SQL> SELECT c.constraint_name, cc.column_name
+  2  FROM user_constraints c
+  3  JOIN user_cons_columns cc
+  4  ON c.constraint_name = cc.constraint_name
+  5  WHERE c.table_name = 'STUDENT1'
+  6  AND c.constraint_type = 'R';
+
+CONSTRAINT_NAME
+------------------------------
+COLUMN_NAME
+--------------------------------------------------------------------------------
+FK_STUDENT1_DEPT
+DEPTNO
+
+
+SQL> SELECT c.constraint_name, cc.column_name
+  2  FROM user_constraints c
+  3  JOIN user_cons_columns cc
+  4  ON c.constraint_name = cc.constraint_name
+  5  WHERE c.table_name = 'STUDENT1'
+  6  AND c.constraint_type = 'P';
+
+CONSTRAINT_NAME
+------------------------------
+COLUMN_NAME
+--------------------------------------------------------------------------------
+PK_STUDENT
+STUREGNO
+
+
+SQL> select * from student1;
+
+STUNAME                        STUREGNO      STUPHNO        AGE       FEES G
+------------------------------ ---------- ---------- ---------- ---------- -
+    DEPTNO
+----------
+hagan                          11249A146  8688810198         18     400000 M
+       101
+
+vamsi                          11249A107  9490404548         20     300000 M
+       101
+
+anmol                          11249A138  1234567890         20     100000 M
+       101
+
+
+SQL> select * from department1;
+
+    DEPTNO DEPTNAME
+---------- ------------------------------
+       102 Mechanical
+       101 computer science
+
+SQL> select * from student;
+
+STUNAME                        STUREGNO                    AGE G
+------------------------------ -------------------- ---------- -
+EMAIL
+------------------------------
+pramod                         11249D009                    19 M
+pramod01@gmail.com
+
+sai                            11249A003                    20 M
+sai03@gmail.com
+
+virat                          11249A156                    19 M
+viratkohli@gmail.com
+
+
+SQL> LINE SIZEPAGE
+SP2-0734: unknown command beginning "LINE SIZEP..." - rest of line ignored.
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+STUDENTS3                      TABLE
+STUDENTS                       TABLE
+STUDENT8                       TABLE
+STUDENT7                       TABLE
+STUDENT6                       TABLE
+STUDENT4                       TABLE
+STUDENT2                       TABLE
+STUDENT1                       TABLE
+STUDENT                        TABLE
+FEE                            TABLE
+EMPLOYEE1                      TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+EMPLOYEE                       TABLE
+DEPTARTMENT                    TABLE
+DEPT                           TABLE
+DEPARTMENT1                    TABLE
+DEPARTMENT                     TABLE
+DEPART                         TABLE
+BIN$koQ09E92Sla9iYJH2Mf9qg==$0 TABLE
+BIN$Y+IC5UXQQ9qcAqsISa0cBg==$0 TABLE
+
+19 rows selected.
+
+SQL> desc student1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUNAME                                   NOT NULL VARCHAR2(30)
+ STUREGNO                                  NOT NULL VARCHAR2(10)
+ STUPHNO                                   NOT NULL NUMBER(10)
+ AGE                                                NUMBER(2)
+ FEES                                               NUMBER(6)
+ GENDER                                             CHAR(1)
+ DEPTNO                                             NUMBER(3)
+
+SQL> insert into student1 values ('&stuname','&sturegno',&stuphno,&age,&fees,'&gender',&deptno);
+Enter value for stuname: sri ram
+Enter value for sturegno: 11249A252
+Enter value for stuphno: 2345678901
+Enter value for age: 20
+Enter value for fees: 300000
+Enter value for gender: M
+Enter value for deptno: 101
+old   1: insert into student1 values ('&stuname','&sturegno',&stuphno,&age,&fees,'&gender',&deptno)
+new   1: insert into student1 values ('sri ram','11249A252',2345678901,20,300000,'M',101)
+
+1 row created.
+
+SQL> /
+Enter value for stuname: eshwar
+Enter value for sturegno: 11249A236
+Enter value for stuphno: 0987654321
+Enter value for age: 20
+Enter value for fees: 700000
+Enter value for gender: M
+Enter value for deptno: 102
+old   1: insert into student1 values ('&stuname','&sturegno',&stuphno,&age,&fees,'&gender',&deptno)
+new   1: insert into student1 values ('eshwar','11249A236',0987654321,20,700000,'M',102)
+
+1 row created.
+
+SQL> select * from student1;
+
+STUNAME                        STUREGNO      STUPHNO        AGE       FEES G
+------------------------------ ---------- ---------- ---------- ---------- -
+    DEPTNO
+----------
+hagan                          11249A146  8688810198         18     400000 M
+       101
+
+vamsi                          11249A107  9490404548         20     300000 M
+       101
+
+anmol                          11249A138  1234567890         20     100000 M
+       101
+
+
+STUNAME                        STUREGNO      STUPHNO        AGE       FEES G
+------------------------------ ---------- ---------- ---------- ---------- -
+    DEPTNO
+----------
+sri ram                        11249A252  2345678901         20     300000 M
+       101
+
+eshwar                         11249A236   987654321         20     700000 M
+       102
+
+
+SQL> select * from department1;
+
+    DEPTNO DEPTNAME
+---------- ------------------------------
+       102 Mechanical
+       101 computer science
+
+SQL> insert into department1 values(103,'civil');
+
+1 row created.
+
+SQL> insert into department1 values(104,'electrical and electronical engineering');
+insert into department1 values(104,'electrical and electronical engineering')
+                                   *
+ERROR at line 1:
+ORA-12899: value too large for column "A156"."DEPARTMENT1"."DEPTNAME" (actual:
+39, maximum: 30)
+
+
+SQL> insert into department1 values(104,'ECE');
+
+1 row created.
+
+SQL> insert into department1 values(105,'LAW');
+
+1 row created.
+
+SQL> select * from department1;
+
+    DEPTNO DEPTNAME
+---------- ------------------------------
+       102 Mechanical
+       101 computer science
+       103 civil
+       104 ECE
+       105 LAW
+
+SQL>
