@@ -1,0 +1,48 @@
+SQL*Plus: Release 11.2.0.1.0 Production on Mon Oct 5 12:45:30 2026
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: A156@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> SET SERVEROUTPUT ON;
+SQL> DECLARE
+  2      N NUMBER;
+  3  BEGIN
+  4      N:=&N;
+  5      IF N>0 THEN
+  6          DBMS_OUTPUT.PUT_LINE('The Number is Positive');
+  7      ELSIF N<0 THEN
+  8          DBMS_OUTPUT.PUT_LINE('The Number is Negative');
+  9      ELSE
+ 10          DBMS_OUTPUT.PUT_LINE('The Number is Zero');
+ 11      END IF;
+ 12  END;
+ 13  /
+Enter value for n: 25
+old   4:     N:=&N;
+new   4:     N:=25;
+The Number is Positive
+
+PL/SQL procedure successfully completed.
+
+SQL> /
+Enter value for n: -15
+old   4:     N:=&N;
+new   4:     N:=-15;
+The Number is Negative
+
+PL/SQL procedure successfully completed.
+
+SQL> /
+Enter value for n: 0
+old   4:     N:=&N;
+new   4:     N:=0;
+The Number is Zero
+
+PL/SQL procedure successfully completed.
+
+SQL>

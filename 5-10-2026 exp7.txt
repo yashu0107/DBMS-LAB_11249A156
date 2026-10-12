@@ -1,0 +1,66 @@
+SQL> create view cse_students as select student_id,student_name,marks from std where department = 'cse';
+
+View created.
+
+SQL> select * from cse_students;
+
+STUDENT_ID STUDENT_NAME                        MARKS
+---------- ------------------------------ ----------
+       101 arun                                   85
+       104 kavi                                   88
+
+SQL> create sequence stud_seq
+  2  start with 105
+  3  increment by 1
+  4  minvalue 105
+  5  maxvalue 999
+  6  nocycle
+  7  nocache;
+
+Sequence created.
+
+SQL> select stud_seq.nextval from dual;
+
+   NEXTVAL
+----------
+       105
+
+SQL> select stud_seq.nextval from dual;
+
+   NEXTVAL
+----------
+       106
+
+SQL> insert into std values(stud_seq.nextval,'ravi','ece',81);
+
+1 row created.
+
+SQL> select * from std;
+
+STUDENT_ID STUDENT_NAME                   DEPARTMENT                MARKS
+---------- ------------------------------ -------------------- ----------
+       101 arun                           cse                          85
+       102 bala                           ece                          78
+       103 divya                          it                           92
+       104 kavi                           cse                          88
+       105 ravi                           ece                          81
+       106 suresh                         it                           95
+       107 ravi                           ece                          81
+
+7 rows selected.
+
+SQL> create index idx_student_name on std(student_name);
+
+Index created.
+
+
+SQL> SELECT INDEX_NAME, TABLE_NAME
+  2  FROM USER_INDEXES
+  3  WHERE TABLE_NAME = 'STD';
+
+INDEX_NAME                     TABLE_NAME
+------------------------------ ------------------------------
+SYS_C0034812                   STD
+IDX_STUDENT_NAME               STD
+
+SQL>

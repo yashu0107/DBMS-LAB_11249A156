@@ -1,0 +1,105 @@
+SQL> select * from std;
+
+STUDENT_ID STUDENT_NAME                   DEPARTMENT                MARKS
+---------- ------------------------------ -------------------- ----------
+       101 arun                           cse                          85
+       102 bala                           ece                          78
+       103 divya                          it                           92
+       104 kavi                           cse                          88
+
+SQL> insert into std values(105,'ravi','ece',81);
+
+1 row created.
+
+SQL> insert into std values(106,'suresh','it',95);
+
+1 row created.
+
+SQL> select count(*) as total_students from std;
+
+TOTAL_STUDENTS
+--------------
+             6
+
+SQL> select sum(marks) as total_marks from std;
+
+TOTAL_MARKS
+-----------
+        519
+
+SQL> select avg(marks) as average_marks from std;
+
+AVERAGE_MARKS
+-------------
+         86.5
+
+SQL> select max(marks) as highest_marks from std;
+
+HIGHEST_MARKS
+-------------
+           95
+
+SQL> select min(marks) as lowest_marks from std;
+
+LOWEST_MARKS
+------------
+          78
+
+SQL> select department, avg(marks) as avg_marks from std group by department;
+
+DEPARTMENT            AVG_MARKS
+-------------------- ----------
+cse                        86.5
+it                         93.5
+ece                        79.5
+
+SQL> select department, count(*) as total_students from std group by department;
+
+DEPARTMENT           TOTAL_STUDENTS
+-------------------- --------------
+cse                               2
+it                                2
+ece                               2
+
+SQL> select department, max(marks) as max_marks from std group by department;
+
+DEPARTMENT            MAX_MARKS
+-------------------- ----------
+cse                          88
+it                           95
+ece                          81
+
+SQL> select department, avg(marks) as avg_marks from std group by department having avg(marks)> 85;
+
+DEPARTMENT            AVG_MARKS
+-------------------- ----------
+cse                        86.5
+it                         93.5
+
+SQL> select department, count(*) as total_students from std group by department having count(*) >1;
+
+DEPARTMENT           TOTAL_STUDENTS
+-------------------- --------------
+cse                               2
+it                                2
+ece                               2
+
+SQL> select department, count(*) as no_of_students,avg(marks) as avg_marks, max(marks) as highest_marks from std group by department having avg(marks)>80;
+
+DEPARTMENT           NO_OF_STUDENTS  AVG_MARKS HIGHEST_MARKS
+-------------------- -------------- ---------- -------------
+cse                               2       86.5            88
+it                                2       93.5            95
+
+SQL> select * from std;
+
+STUDENT_ID STUDENT_NAME                   DEPARTMENT                MARKS
+---------- ------------------------------ -------------------- ----------
+       101 arun                           cse                          85
+       102 bala                           ece                          78
+       103 divya                          it                           92
+       104 kavi                           cse                          88
+       105 ravi                           ece                          81
+       106 suresh                         it                           95
+
+6 rows selected.
