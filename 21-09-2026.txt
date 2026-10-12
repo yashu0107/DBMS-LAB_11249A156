@@ -1,0 +1,90 @@
+SQL*Plus: Release 11.2.0.1.0 Production on Mon Sep 21 10:10:55 2026
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: A156@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> create table Stu
+  2  (
+  3  regno varchar2(10),
+  4  name varchar2(30),
+  5  year number(2)
+  6  );
+
+Table created.
+
+
+SQL> insert into Stu values(180,'suresh',3);
+
+1 row created.
+
+SQL> insert into Stu values(174,'bala',2);
+
+1 row created.
+
+SQL> Grant select on Stu to scott;
+
+Grant succeeded.
+
+SQL> grant select,insert,update on Stu to scott;
+
+Grant succeeded.
+
+SQL> revoke insert on Stu from scott;
+
+Revoke succeeded.
+
+SQL> select * from Stu;
+
+REGNO      NAME                                 YEAR
+---------- ------------------------------ ----------
+180        suresh                                  3
+174        bala                                    2
+
+SQL> insert into Stu values(170,'divya',3);
+
+1 row created.
+
+SQL> insert into Stu values(103,'kavi',2);
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> insert into Stu values(102,'veda',1);
+
+1 row created.
+
+SQL> savepoint sp1;
+
+Savepoint created.
+
+SQL> insert into Stu values(104,'ravi',4);
+
+1 row created.
+
+SQL> rollback to sp1;
+
+Rollback complete.
+
+SQL> select * from Stu;
+
+REGNO      NAME                                 YEAR
+---------- ------------------------------ ----------
+180        suresh                                  3
+174        bala                                    2
+170        divya                                   3
+103        kavi                                    2
+102        veda                                    1
+
+SQL> commit;
+
+Commit complete.
+
+SQL>
