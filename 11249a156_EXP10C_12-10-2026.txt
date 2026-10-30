@@ -1,0 +1,151 @@
+
+SQL*Plus: Release 11.2.0.1.0 Production on Mon Oct 12 12:33:24 2026
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: A156@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> create table s
+  2  (
+  3  s_id number(5) primary key,
+  4  s_name varchar2(30),
+  5  marks number(3)
+  6  );
+
+Table created.
+
+SQL> insert into s values(101,'arun',85);
+
+1 row created.
+
+SQL> insert into s values(102,'bala',72);
+
+1 row created.
+
+SQL> insert into s values(103,'divya',91);
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> create or replace procedure get_student
+  2  (
+  3      p_id in number
+  4  )
+  5  is
+  6      v_name s.s_name%type;
+  7      v_marks s.marks%type;
+  8  begin
+  9       select s_name,marks
+ 10       into v_name,v_marks
+ 11       from s
+ 12       where s_id=p_id;
+ 13       dbms_output.put_line('student name:'||v_name);
+ 14       dbms_output.put_line('marks       :'||v_marks);
+ 15  exception
+ 16      when no_data_found then
+ 17          dbms_output.put_line('student record not found');
+ 18  end;
+ 19  /
+
+Procedure created.
+
+SQL> set serveroutput on;
+SQL> exec get_student(101);
+student name:arun
+marks       :85
+
+PL/SQL procedure successfully completed.
+
+SQL> exec get_student(110);
+student record not found
+
+PL/SQL procedure successfully completed.
+
+
+SQL> create or replace function find_grade
+  2  (
+  3      p_marks number
+  4  )
+  5  return varchar2
+  6  is
+  7      v_grade varchar2(2);
+  8  begin
+  9      if p_marks>=90 then
+ 10          v_grade:='0';
+ 11      elsif p_marks>=80 then
+ 12          v_grade:='a+';
+ 13      elsif p_marks>=70 then
+ 14          v_grade:='a';
+ 15      elsif p_marks>=60 then
+ 16          v_grade:='b';
+ 17      else
+ 18          v_grade:='c';
+ 19      end if;
+ 20      return v_grade;
+ 21  end;
+ 22  /
+
+Function created.
+
+SQL> SELECT FIND_GRADE(91) AS GRADE FROM DUAL;
+
+GRADE
+--------------------------------------------------------------------------------
+0
+
+SQL> SELECT FIND_GRADE(75) AS GRADE FROM DUAL;
+
+GRADE
+--------------------------------------------------------------------------------
+a
+
+SQL> select s_id,s_name,marks,
+  2         find_grade(marks) as grade
+  3  from s;
+
+      S_ID S_NAME                              MARKS
+---------- ------------------------------ ----------
+GRADE
+--------------------------------------------------------------------------------
+       101 arun                                   85
+a+
+
+       102 bala                                   72
+a
+
+       103 divya                                  91
+0
+
+
+SQL> SELECT OBJECT_NAME, OBJECT_TYPE
+  2  FROM USER_OBJECTS
+  3  WHERE OBJECT_TYPE = 'PROCEDURE';
+
+OBJECT_NAME
+--------------------------------------------------------------------------------
+OBJECT_TYPE
+-------------------
+GET_STUDENT
+PROCEDURE
+
+
+SQL> SELECT OBJECT_NAME, OBJECT_TYPE
+  2  FROM USER_OBJECTS
+  3  WHERE OBJECT_TYPE = 'FUNCTION';
+
+OBJECT_NAME
+--------------------------------------------------------------------------------
+OBJECT_TYPE
+-------------------
+FIND_GRADE
+FUNCTION
+
+
+SQL>
