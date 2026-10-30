@@ -1,0 +1,171 @@
+SQL*Plus: Release 11.2.0.1.0 Production on Mon Aug 3 05:32:25 2026
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: A156@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+STUDENT6                       TABLE
+STUDENT4                       TABLE
+STUDENT2                       TABLE
+STUDENT1                       TABLE
+STUDENT                        TABLE
+STU                            TABLE
+EMPLOYEE                       TABLE
+
+7 rows selected.
+
+SQL> desc student1
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                     NOT NULL CHAR(10)
+ NAME                                               CHAR(20)
+ DOB                                                DATE
+ COURSE                                             CHAR(10)
+
+SQL> desc student
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                              CHAR(10)
+ NAME                                               CHAR(30)
+ DOB                                                DATE
+ COURSE                                             CHAR(10)
+ DEPTNO                                             CHAR(10)
+ YEAR                                               NUMBER(2)
+
+SQL> create table student7
+  2  (
+  3  regno char(10)primary key,
+  4  name char(20),
+  5  dob date,
+  6  dept char(10)
+  7  );
+
+Table created.
+
+SQL> desc student7
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                     NOT NULL CHAR(10)
+ NAME                                               CHAR(20)
+ DOB                                                DATE
+ DEPT                                               CHAR(10)
+
+SQL> create table dept
+  2  (
+  3  deptno number(5) primary key,
+  4  deptname char(10)
+  5  );
+
+Table created.
+
+
+SQL> create table student8
+  2  (
+  3  regno char(10)primary key,
+  4  name char(20),
+  5  deptno number(5) references dept(deptno)
+  6  );
+
+Table created.
+
+SQL> desc student8
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                     NOT NULL CHAR(10)
+ NAME                                               CHAR(20)
+ DEPTNO                                             NUMBER(5)
+
+SQL> desc dept
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEPTNO                                    NOT NULL NUMBER(5)
+ DEPTNAME                                           CHAR(10)
+
+
+SQL> CREATE TABLE Department
+  2  (
+  3      DeptName VARCHAR2(20) PRIMARY KEY
+  4  );
+
+Table created.
+
+SQL> desc Department
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEPTNAME                                  NOT NULL VARCHAR2(20)
+
+SQL> create table student9
+  2  (
+  3      RegNo NUMBER(5) PRIMARY KEY,
+  4      Name VARCHAR2(30),
+  5      Email VARCHAR2(50) UNIQUE,
+  6      Age NUMBER(3) CHECK (Age >= 18),
+  7      Gender VARCHAR2(10) DEFAULT 'Male',
+  8      DeptName VARCHAR2(20),
+  9      FOREIGN KEY (DeptName) REFERENCES Department(DeptName)
+ 10  );
+
+Table created.
+
+SQL> insert into Department values('CSE');
+
+1 row created.
+
+SQL> insert into Department values('ECE');
+
+1 row created.
+
+SQL> insert into Department values('IT');
+
+1 row created.
+
+SQL> insert into student9 values(1,'arun','arun@gmail.com',19,'male','CSE');
+
+1 row created.
+
+SQL> insert into student9 values(2,'priya','priya@gmail.com',18,'female','ECE');
+
+1 row created.
+
+
+SQL> insert into student9 values(3,'rahul','rahul@gmail.com','',20,'IT');
+
+1 row created.
+
+SQL> select * from student9;
+
+     REGNO NAME
+---------- ------------------------------
+EMAIL                                                     AGE GENDER
+-------------------------------------------------- ---------- ----------
+DEPTNAME
+--------------------
+         1 arun
+arun@gmail.com                                             19 male
+CSE
+
+         2 priya
+priya@gmail.com                                            18 female
+ECE
+
+     REGNO NAME
+---------- ------------------------------
+EMAIL                                                     AGE GENDER
+-------------------------------------------------- ---------- ----------
+DEPTNAME
+--------------------
+
+         3 rahul
+rahul@gmail.com                                               20
+IT
+
+
+SQL>
