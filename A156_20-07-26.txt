@@ -1,0 +1,197 @@
+SQL*Plus: Release 11.2.0.1.0 Production on Mon Jul 20 10:27:14 2026
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: A156@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> create table student
+  2  (
+  3  regno char(10),
+  4  name char(30),
+  5  DOB date,
+  6  course char(10),
+  7  Deptno char(10),
+  8  year number(2)
+  9  );
+
+Table created.
+
+SQL> desc student
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                              CHAR(10)
+ NAME                                               CHAR(30)
+ DOB                                                DATE
+ COURSE                                             CHAR(10)
+ DEPTNO                                             CHAR(10)
+ YEAR                                               NUMBER(2)
+
+SQL> create table student2 as select * from student;
+
+Table created.
+
+SQL> desc student2
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                              CHAR(10)
+ NAME                                               CHAR(30)
+ DOB                                                DATE
+ COURSE                                             CHAR(10)
+ DEPTNO                                             CHAR(10)
+ YEAR                                               NUMBER(2)
+
+SQL> create table student3 as select regno,name,DOB from student;
+
+Table created.
+
+SQL> desc student3
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                              CHAR(10)
+ NAME                                               CHAR(30)
+ DOB                                                DATE
+
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+STUDENT3                       TABLE
+STUDENT2                       TABLE
+STUDENT                        TABLE
+
+SQL> drop table student3;
+
+Table dropped.
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+STUDENT2                       TABLE
+STUDENT                        TABLE
+BIN$UgbQvDR9RiGjrqmRW9PkBw==$0 TABLE
+
+SQL> insert into student values('11249A156','PRASAD','11-feb-07','BE','CSE','3');
+
+1 row created.
+
+SQL> select * from student;
+
+REGNO      NAME                           DOB       COURSE     DEPTNO
+---------- ------------------------------ --------- ---------- ----------
+      YEAR
+----------
+11249A156   prasad                       11-FEB-07   BE         CSE
+         3
+
+
+SQL> select * from student;
+
+REGNO      NAME                           DOB       COURSE     DEPTNO
+---------- ------------------------------ --------- ---------- ----------
+      YEAR
+----------
+11249A156   prasad                       11-FEB-07 BE         CSE
+         3
+
+
+
+SQL> insert into student (regno,name) values('11249A171','veda');
+
+1 row created.
+
+
+SQL> select * from student;
+
+REGNO      NAME                           DOB       COURSE     DEPTNO
+---------- ------------------------------ --------- ---------- ----------
+      YEAR
+----------
+11249A156  prasad                      11-FEB-07   BE         CSE
+         3
+
+11249A171  veda
+
+
+
+SQL> insert into student values('&regno','&name','&DOB','&course','&deptno','&year');
+Enter value for regno: 1
+Enter value for name: prasad
+Enter value for dob: 11-feb-07
+Enter value for course: be
+Enter value for deptno: csa
+Enter value for year: 2
+old   1: insert into student values('&regno','&name','&DOB','&course','&deptno','&year')
+new   1: insert into student values('1','prasad','11-feb-07','be','csa','2')
+
+1 row created.
+
+SQL> /
+Enter value for regno: 2
+Enter value for name: venu
+Enter value for dob: 25-aug-08
+Enter value for course: be
+Enter value for deptno: cse
+Enter value for year: 1
+old   1: insert into student values('&regno','&name','&DOB','&course','&deptno','&year')
+new   1: insert into student values('2','venu','25-aug-08','be','cse','1')
+
+1 row created.
+
+SQL> select * from student;
+
+REGNO      NAME                           DOB       COURSE     DEPTNO
+---------- ------------------------------ --------- ---------- ----------
+      YEAR
+----------
+11249A156  prasad                       11-FEB-07 BE         CSE
+         3
+
+11249A171  veda
+
+
+1          abhi                          11-FEB-07 be         csa
+         2
+
+
+REGNO      NAME                           DOB       COURSE     DEPTNO
+---------- ------------------------------ --------- ---------- ----------
+      YEAR
+----------
+2          venu                          25-AUG-08  be         cse
+         1
+
+
+SQL> create table student4 as select * from student where 1+4=7;
+
+Table created.
+
+
+SQL> select * from student4;
+
+no rows selected
+
+SQL> alter table student modify name char(20);
+alter table student modify name char(20)
+                           *
+ERROR at line 1:
+ORA-01441: cannot decrease column length because some value is too big
+
+
+ERROR at line 1:
+ORA-01441: cannot decrease column length because some value is too big
+
+
+SQL> alter table student modify name char(25);
+alter table student modify name char(25)
+                           *
+ERROR at line 1:
+ORA-01441: cannot decrease column length because some value is too big
+
+
+SQL>
